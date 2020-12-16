@@ -259,7 +259,7 @@ diff
 {'full_text': '○ 59°F, foggy  ☼ '}
 """
 
-import datetime
+import datetime as dt
 
 
 # API information
@@ -697,18 +697,18 @@ class Py3status:
 
     def _format_sunrise(self, wthr):
         # Get the time for sunrise (default is the start of time)
-        dt = datetime.datetime.utcfromtimestamp(self._jpath(wthr, OWM_SUNRISE, 0))
+        sunrise = dt.datetime.utcfromtimestamp(self._jpath(wthr, OWM_SUNRISE, 0))
 
         # Format the sunrise
-        replaced = dt.strftime(self.format_sunrise)
+        replaced = sunrise.strftime(self.format_sunrise)
         return self.py3.safe_format(replaced, {"icon": self.icon_sunrise})
 
     def _format_sunset(self, wthr):
         # Get the time for sunset (default is the start of time)
-        dt = datetime.datetime.utcfromtimestamp(self._jpath(wthr, OWM_SUNSET, 0))
+        sunset = dt.datetime.utcfromtimestamp(self._jpath(wthr, OWM_SUNSET, 0))
 
         # Format the sunset
-        replaced = dt.strftime(self.format_sunset)
+        replaced = sunset.strftime(self.format_sunset)
         return self.py3.safe_format(replaced, {"icon": self.icon_sunset})
 
     def _format_dict(self, wthr, city, country):

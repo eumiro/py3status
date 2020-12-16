@@ -60,8 +60,8 @@ SAMPLE OUTPUT
 {'full_text': 'up 1 days 18 hours 20 minutes'}
 """
 
-from time import time
-from datetime import datetime
+import datetime as dt
+import time
 from collections import OrderedDict
 from pathlib import Path
 
@@ -101,7 +101,7 @@ class Py3status:
             uptime[unit], up = divmod(up, interval)
 
         if self.since:
-            since = datetime.fromtimestamp(offset)
+            since = dt.datetime.fromtimestamp(offset)
             new_format = datetime.strftime(since, self.format)
         else:
             new_format = self.format

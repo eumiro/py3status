@@ -95,13 +95,14 @@ SAMPLE OUTPUT
 ]
 """
 
-from datetime import timedelta
-from time import time
+import datetime as dt
+import re
+import sys
+import time
+
 from gi.repository import GObject
 from gi.repository.GLib import GError
 from threading import Thread
-import re
-import sys
 from pydbus import SessionBus
 
 
@@ -118,7 +119,7 @@ STOPPED = 2
 
 def _get_time_str(microseconds):
     seconds = int(microseconds / 1000000)
-    time = str(timedelta(seconds=seconds))
+    time = str(dt.timedelta(seconds=seconds))
     if time[0] == "0":
         time = time[2:]
         if time[0] == "0":

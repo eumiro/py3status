@@ -110,7 +110,8 @@ aqi_hazardous
 {'color':'#7E0023', 'full_text':'Shanghai: 301 Hazardous'}
 """
 
-from datetime import datetime
+import datetime as dt
+from dateutil import tz
 
 
 class Py3status:
@@ -174,8 +175,8 @@ class Py3status:
         for k in self.init_datetimes:
             if k in data:
                 data[k] = self.py3.safe_format(
-                    datetime.strftime(
-                        datetime.fromtimestamp(data[k]), self.format_datetime[k]
+                    dt.datetime.strftime(
+                        dt.datetime.fromtimestamp(data[k]), self.format_datetime[k]
                     )
                 )
         return data

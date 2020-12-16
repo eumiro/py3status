@@ -32,7 +32,7 @@ closed
 {'color': '#FF0000', 'full_text': 'closed since 16:38'}
 """
 
-import datetime
+import datetime as dt
 
 STRING_UNAVAILABLE = "spaceapi: N/A"
 
@@ -101,8 +101,8 @@ class Py3status:
 
             if "lastchange" in data["state"].keys():
                 try:
-                    dt = datetime.datetime.fromtimestamp(data["state"]["lastchange"])
-                    lastchanged = dt.strftime(self.format_lastchanged)
+                    dt_obj = dt.datetime.fromtimestamp(data["state"]["lastchange"])
+                    lastchanged = dt_obj.strftime(self.format_lastchanged)
                 except TypeError:
                     pass
 

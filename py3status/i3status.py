@@ -2,7 +2,7 @@ import sys
 
 from copy import deepcopy
 from json import loads
-from datetime import datetime, timedelta, tzinfo, timezone
+import datetime as dt
 from subprocess import Popen
 from subprocess import PIPE
 from signal import SIGTSTP, SIGSTOP, SIGUSR1, SIG_IGN, signal
@@ -170,7 +170,7 @@ class I3statusModule:
         self.time_format = time_format
 
     def update_time_value(self):
-        date = datetime.now(self.tz)
+        date = dt.datetime.now(self.tz)
         # set the full_text with the correctly formatted date
         try:
             new_value = date.strftime(self.time_format)
@@ -207,13 +207,14 @@ class I3statusModule:
         else:
             i3s_time_tz = parts[2]
 
-        date = datetime.strptime(i3s_datetime, TIME_FORMAT)
+        date = dt.datetime.strptime(i3s_datetime, TIME_FORMAT)
         # calculate the time delta
-        now = datetime.now(timezone.utc)
-        offset_mins = - (now - date.replace(tzinfo=timezone.utc)) // timedelta(minutes=1)
+        now = dt.datetime.now(dt.timezone.utc)
+        delta = now - date.replace(tzinfo=dt.timezone.utc)
+        offset_mins = -(delta // dt.timedelta(minutes=1))
 
         try:
-            self.tz = timezone(timedelta(minutes=offset_mins), i3s_time_tz)
+            self.tz = dt.timezone(dt.timedelta(minutes=offset_mins), i3s_time_tz)
         except ValueError:
             return False
         return True

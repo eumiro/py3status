@@ -61,8 +61,8 @@ stopped
 """
 
 import re
-from datetime import timedelta
-from time import sleep
+import datetime as dt
+import time
 
 import dbus
 
@@ -143,7 +143,7 @@ class Py3status:
                 album = metadata.get("xesam:album")
                 artist = metadata.get("xesam:artist")[0]
                 microtime = metadata.get("mpris:length")
-                rtime = str(timedelta(microseconds=microtime))[:-7]
+                rtime = str(dt.timedelta(microseconds=microtime))[:-7]
                 title = metadata.get("xesam:title")
                 if self.sanitize_titles:
                     album = self._sanitize_title(album)
@@ -204,13 +204,13 @@ class Py3status:
         button = event["button"]
         if button == self.button_play_pause:
             self.py3.command_run(self._spotify_cmd("PlayPause"))
-            sleep(0.1)
+            time.sleep(0.1)
         elif button == self.button_next:
             self.py3.command_run(self._spotify_cmd("Next"))
-            sleep(0.1)
+            time.sleep(0.1)
         elif button == self.button_previous:
             self.py3.command_run(self._spotify_cmd("Previous"))
-            sleep(0.1)
+            time.sleep(0.1)
 
 
 if __name__ == "__main__":

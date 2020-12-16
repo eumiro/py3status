@@ -161,7 +161,7 @@ down
 {'color': '#ff0000', 'full_text': 'WW: down'}
 """
 
-from datetime import timedelta
+import datetime as dt
 
 from pydbus import SystemBus
 
@@ -526,7 +526,7 @@ class Py3status:
                     stats = self._organize(self._get_stats(bearer))
                     if stats:
                         stats["duration_hms"] = format(
-                            timedelta(seconds=stats["duration"])
+                            dt.timedelta(seconds=stats["duration"])
                         )
                     wwan_data["format_stats"] = self.py3.safe_format(
                         self.format_stats, stats

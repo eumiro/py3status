@@ -65,7 +65,7 @@ stopped
 {'color': '#ff0000', 'full_text': '[stop] Music For Programming - Idol Eyes'}
 """
 
-import datetime
+import datetime as dt
 import re
 import socket
 from py3status.composite import Composite
@@ -76,7 +76,7 @@ from time import sleep
 
 def song_attr(song, attr):
     def parse_mtime(date_str):
-        return datetime.datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
+        return dt.datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
 
     if attr == "time":
         try:

@@ -21,7 +21,7 @@ SAMPLE OUTPUT
 {'full_text': '13:00 Eat lunch'}
 
 """
-from datetime import datetime
+import datetime as dt
 from re import compile as re_compile
 from khal.settings import get_config
 from khal.cli import build_collection
@@ -51,7 +51,7 @@ class Py3status:
     def khal_calendar(self):
         self._init_config()
         daterange = (
-            str(datetime.now().strftime(self.datetimeformat)) + " " + self.date_end
+            str(dt.datetime.now().strftime(self.datetimeformat)) + " " + self.date_end
         )
         output = khal_list(self.collection, daterange, self.config, self.output_format)
         output = [self._format_output(x) for x in output[1:]]

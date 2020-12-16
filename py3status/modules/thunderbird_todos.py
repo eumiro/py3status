@@ -138,9 +138,9 @@ SAMPLE OUTPUT
 {'full_text': 'New Task 1, New Task 2'}
 """
 
-from sqlite3 import connect
-from datetime import datetime
+import datetime as dt
 from pathlib import Path
+from sqlite3 import connect
 
 STRING_NO_PROFILE = "missing profile"
 STRING_NOT_INSTALLED = "not installed"
@@ -231,8 +231,8 @@ class Py3status:
             for k in self.init_datetimes:
                 if k in todo:
                     todo[k] = self.py3.safe_format(
-                        datetime.strftime(
-                            datetime.fromtimestamp(float(str(todo[k])[:-6])),
+                        dt.datetime.strftime(
+                            dt.datetime.fromtimestamp(float(str(todo[k])[:-6])),
                             self.format_datetime[k],
                         )
                     )

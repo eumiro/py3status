@@ -37,7 +37,7 @@ SAMPLE OUTPUT
 
 import boto
 import csv
-import datetime
+import datetime as dt
 
 from pathlib import Path
 
@@ -62,8 +62,8 @@ class Py3status:
         # Format : 123456789012-aws-billing-csv-yyyy-mm.csv
         s3_file_key = "{}-aws-billing-csv-{}-{}.csv".format(
             self.aws_account_id,
-            datetime.datetime.now().strftime("%Y"),
-            datetime.datetime.now().strftime("%m"),
+            dt.datetime.now().strftime("%Y"),
+            dt.datetime.now().strftime("%m"),
         )
         i = 0
 

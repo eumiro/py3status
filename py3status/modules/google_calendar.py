@@ -136,7 +136,7 @@ SAMPLE OUTPUT
 """
 
 import httplib2
-import datetime
+import datetime as dt
 from pathlib import Path
 
 try:
@@ -148,8 +148,7 @@ from oauth2client import clientsecrets
 from oauth2client import tools
 from oauth2client.file import Storage
 from httplib2 import ServerNotFoundError
-from dateutil import parser
-from dateutil.tz import tzlocal
+from dateutil import parser, tz
 
 SCOPES = "https://www.googleapis.com/auth/calendar.readonly"
 APPLICATION_NAME = "py3status google_calendar module"
@@ -258,9 +257,9 @@ class Py3status:
 
         Returns: The list of events.
         """
-        self.last_update = datetime.datetime.now()
-        time_min = datetime.datetime.utcnow()
-        time_max = time_min + datetime.timedelta(hours=self.events_within_hours)
+        self.last_update = dt.datetime.now()
+        time_min = dt.datetime.utcnow()
+        time_max = time_min + dt.timedelta(hours=self.events_within_hours)
         events = []
 
         try:
@@ -268,8 +267,8 @@ class Py3status:
                 self.service.events()
                 .list(
                     calendarId="primary",
-                    timeMax=time_max.isoformat() + "Z",  # 'Z' indicates UTC time
-                    timeMin=time_min.isoformat() + "Z",  # 'Z' indicates UTC time
+                    timeMax=f"{time_max:%Y-%m-%dT%H:%M:%SZ}",
+                    timeMin=f"{time_min:%Y-%m-%dT%H:%M:%SZ}",
                     singleEvents=True,
                     orderBy="startTime",
                 )
@@ -340,7 +339,7 @@ class Py3status:
         Returns in a dict the number of days/hours/minutes and total minutes
         until date_time.
         """
-        now = datetime.datetime.now(tzlocal())
+        now = dt.datetime.now(tz.tzlocal())
         diff = date_time - now
 
         days = int(diff.days)
@@ -405,7 +404,7 @@ class Py3status:
                 start_dt = self._gstr_to_datetime(event["start"].get("dateTime"))
                 end_dt = self._gstr_to_datetime(event["end"].get("dateTime"))
 
-            if end_dt < datetime.datetime.now(tzlocal()):
+            if end_dt < dt.datetime.now(tz.tzlocal()):
                 continue
 
             event_dict["start_time"] = self._datetime_to_str(start_dt, self.format_time)
@@ -499,7 +498,7 @@ class Py3status:
             if button_index == "sep":
                 self.py3.prevent_refresh()
             elif button == self.button_refresh:
-                now = datetime.datetime.now()
+                now = dt.datetime.now()
                 diff = (now - self.last_update).seconds
                 if diff > 1:
                     self.no_update = False

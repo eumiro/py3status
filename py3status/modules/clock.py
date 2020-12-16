@@ -90,9 +90,9 @@ london
 {'full_text': 'Thursday Feb 23 1:42 AM London'}
 """
 
+import datetime as dt
 import locale
 import re
-from datetime import datetime
 from time import time
 
 import pytz
@@ -252,7 +252,7 @@ class Py3status:
             if zone == "?":
                 times[name] = "?"
             else:
-                t = datetime.now(zone)
+                t = dt.datetime.now(zone)
                 format_time = self.format_time[self.active_time_format]
                 icon = None
                 if self.py3.format_contains(format_time, "icon"):
