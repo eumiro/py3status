@@ -33,6 +33,7 @@ closed
 """
 
 import datetime as dt
+from dateutil import tz
 
 STRING_UNAVAILABLE = "spaceapi: N/A"
 
@@ -101,8 +102,8 @@ class Py3status:
 
             if "lastchange" in data["state"].keys():
                 try:
-                    dt_obj = dt.datetime.fromtimestamp(data["state"]["lastchange"])
-                    lastchanged = dt_obj.strftime(self.format_lastchanged)
+                    dt_obj = dt.datetime.utcfromtimestamp(data["state"]["lastchange"])
+                    lastchanged = dt_obj.astimezone(tz.tzlocal()).strftime(self.format_lastchanged)
                 except TypeError:
                     pass
 

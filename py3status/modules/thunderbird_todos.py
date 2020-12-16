@@ -142,6 +142,8 @@ import datetime as dt
 from pathlib import Path
 from sqlite3 import connect
 
+from dateutil import tz
+
 STRING_NO_PROFILE = "missing profile"
 STRING_NOT_INSTALLED = "not installed"
 
@@ -232,7 +234,7 @@ class Py3status:
                 if k in todo:
                     todo[k] = self.py3.safe_format(
                         dt.datetime.strftime(
-                            dt.datetime.fromtimestamp(float(str(todo[k])[:-6])),
+                            dt.datetime.utcfromtimestamp(float(str(todo[k])[:-6])).astimezone(tz.tzlocal(),
                             self.format_datetime[k],
                         )
                     )

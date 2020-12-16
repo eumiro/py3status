@@ -176,7 +176,7 @@ class Py3status:
             if k in data:
                 data[k] = self.py3.safe_format(
                     dt.datetime.strftime(
-                        dt.datetime.fromtimestamp(data[k]), self.format_datetime[k]
+                        dt.datetime.utcfromtimestamp(data[k]).astimezone(tz.tzlocal()), self.format_datetime[k]
                     )
                 )
         return data

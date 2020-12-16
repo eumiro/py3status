@@ -65,6 +65,8 @@ import time
 from collections import OrderedDict
 from pathlib import Path
 
+from dateutil import tz
+
 
 class Py3status:
     """
@@ -101,7 +103,7 @@ class Py3status:
             uptime[unit], up = divmod(up, interval)
 
         if self.since:
-            since = dt.datetime.fromtimestamp(offset)
+            since = dt.datetime.utcfromtimestamp(offset).astimezone(tz.tzlocal())
             new_format = datetime.strftime(since, self.format)
         else:
             new_format = self.format

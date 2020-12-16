@@ -138,13 +138,13 @@ no_timew
 {'full_text': 'No Timew'}
 """
 
-from pytz import utc
 import datetime as dt
 from json import loads as json_loads
+
 from dateutil.relativedelta import relativedelta
 
 STRING_NOT_INSTALLED = "not installed"
-DATETIME = "%Y%m%dT%H%M%SZ"
+DATETIME = "%Y%m%dT%H%M%S%z"
 STRING_INVALID_TIMEOUT = "invalid cache_timeout"
 
 
@@ -241,7 +241,7 @@ class Py3status:
             # duraton
             if time["state_time"]:
                 self.tracking = True
-                end = dt.datetime.now(utc).utcnow()
+                end = dt.datetime.now(dt.timezone.utc)
             else:
                 end = dt.datetime.strptime(time["end"], DATETIME)
 

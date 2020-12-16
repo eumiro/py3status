@@ -259,7 +259,7 @@ class Py3status:
         Returns: The list of events.
         """
         self.last_update = time.time()
-        time_min = dt.datetime.utcnow()
+        time_min = dt.datetime.now(dt.timezone.utc)
         time_max = time_min + dt.timedelta(hours=self.events_within_hours)
         events = []
 

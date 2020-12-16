@@ -76,7 +76,7 @@ from time import sleep
 
 def song_attr(song, attr):
     def parse_mtime(date_str):
-        return dt.datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
+        return dt.datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S%z")
 
     if attr == "time":
         try:
