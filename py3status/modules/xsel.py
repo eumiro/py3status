@@ -34,7 +34,8 @@ SAMPLE OUTPUT
 """
 
 
-import time
+import datetime as dt
+from dateutil import tz
 from pathlib import Path
 
 
@@ -59,8 +60,8 @@ class Py3status:
 
         if self.log_file and selection and selection != self.selection_cache:
             with self.log_file.open("a") as f:
-                datetime = time.strftime("%Y-%m-%d %H:%M:%S")
-                f.write(f"{datetime}\n{selection}\n")
+                now = dt.datetime.now(tz.tzlocal())
+                f.write(f"{now:%Y-%m-%d %H:%M:%S}\n{selection}\n")
             self.selection_cache = selection
 
         selection = " ".join(selection.split())

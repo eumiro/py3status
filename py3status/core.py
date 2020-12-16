@@ -867,7 +867,7 @@ class Py3statusWrapper:
         else:
             # Binary mode so fs encoding setting is not an issue
             with self.config["log_file"].open("ab") as f:
-                log_time = time.strftime("%Y-%m-%d %H:%M:%S")
+                now = dt.datetime.now(tz.tzlocal())
                 # nice formatting of data structures using pretty print
                 if isinstance(msg, (dict, list, set, tuple)):
                     msg = pformat(msg)
@@ -875,7 +875,7 @@ class Py3statusWrapper:
                     # to aid readability.
                     if "\n" in msg:
                         msg = "\n" + msg
-                out = f"{log_time} {level.upper()} {msg}\n"
+                out = f"{now:%Y-%m-%d %H:%M:%S} {level.upper()} {msg}\n"
                 try:
                     # Encode unicode strings to bytes
                     f.write(out.encode("utf-8"))
