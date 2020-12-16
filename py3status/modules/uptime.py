@@ -94,9 +94,8 @@ class Py3status:
                 self.seconds, self.interval = None, second
 
     def uptime(self):
-        with Path("/proc/uptime").open() as f:
-            up = int(float(f.readline().split()[0]))
-            offset = time() - up
+        up = int(float(Path("/proc/uptime").read_text().split()[0]))
+        offset = time.time() - up
 
         uptime = {}
         for unit, interval in self.time_periods.items():
