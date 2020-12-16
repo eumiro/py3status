@@ -261,11 +261,9 @@ class Py3status:
             # datetime
             for word in self.init["datetimes"]:
                 if word in time:
+                    tstamp = dt.datetime.strptime(time[word], DATETIME)
                     time[word] = self.py3.safe_format(
-                        dt.datetime.strftime(
-                            dt.datetime.strptime(time[word], DATETIME),
-                            self.format_datetime[word],
-                        )
+                        f"{tstamp:{self.format_datetime[word]}}"
                     )
 
             # time

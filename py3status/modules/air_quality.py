@@ -174,11 +174,8 @@ class Py3status:
 
         for k in self.init_datetimes:
             if k in data:
-                data[k] = self.py3.safe_format(
-                    dt.datetime.strftime(
-                        dt.datetime.utcfromtimestamp(data[k]).astimezone(tz.tzlocal()), self.format_datetime[k]
-                    )
-                )
+                tstamp = dt.datetime.utcfromtimestamp(data[k]).astimezone(tz.tzlocal())
+                data[k] = self.py3.safe_format(f"{tstamp:{self.format_datetime[k]}}")
         return data
 
     def air_quality(self):

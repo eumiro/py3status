@@ -232,11 +232,11 @@ class Py3status:
             # datetimes
             for k in self.init_datetimes:
                 if k in todo:
+                    tstamp = dt.datetime.utcfromtimestamp(
+                        float(str(todo[k])[:-6])
+                    ).astimezone(tz.tzlocal())
                     todo[k] = self.py3.safe_format(
-                        dt.datetime.strftime(
-                            dt.datetime.utcfromtimestamp(float(str(todo[k])[:-6])).astimezone(tz.tzlocal(),
-                            self.format_datetime[k],
-                        )
+                        f"{tstamp:{self.format_datetime[k]}}"
                     )
             # thresholds
             for x in self.thresholds_init["format_todo"]:

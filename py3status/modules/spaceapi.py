@@ -102,8 +102,10 @@ class Py3status:
 
             if "lastchange" in data["state"].keys():
                 try:
-                    dt_obj = dt.datetime.utcfromtimestamp(data["state"]["lastchange"])
-                    lastchanged = dt_obj.astimezone(tz.tzlocal()).strftime(self.format_lastchanged)
+                    dt_lastchanged = dt.datetime.utcfromtimestamp(
+                        data["state"]["lastchange"]
+                    ).astimezone(tz.tzlocal())
+                    lastchanged = f"{dt_lastchanged:{self.format_lastchanged}}"
                 except TypeError:
                     pass
 

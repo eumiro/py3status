@@ -103,7 +103,7 @@ class Py3status:
 
         if self.since:
             since = dt.datetime.utcfromtimestamp(offset).astimezone(tz.tzlocal())
-            new_format = datetime.strftime(since, self.format)
+            new_format = f"{since:{self.format}}"
         else:
             new_format = self.format
 

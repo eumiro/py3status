@@ -93,9 +93,9 @@ def song_attr(song, attr):
         except (KeyError, ValueError):
             return ""
     elif attr == "mtime":
-        return parse_mtime(song["last-modified"]).strftime("%c")
+        return f"{parse_mtime(song['last-modified']):%c}"
     elif attr == "mdate":
-        return parse_mtime(song["last-modified"]).strftime("%x")
+        return f"{parse_mtime(song['last-modified']):%x}"
 
     return song.get(attr, "")
 

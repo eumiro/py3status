@@ -288,9 +288,9 @@ class Py3status:
 
                 if self.py3.is_composite(format_time):
                     for item in format_time:
-                        item["full_text"] = t.strftime(item["full_text"])
+                        item["full_text"] = f"{t:{item['full_text']}}"
                 else:
-                    format_time = t.strftime(format_time)
+                    format_time = f"{t:{format_time}}"
                 times[name] = format_time
 
         # work out when we need to update

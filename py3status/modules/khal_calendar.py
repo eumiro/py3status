@@ -53,9 +53,8 @@ class Py3status:
 
     def khal_calendar(self):
         self._init_config()
-        daterange = (
-            str(dt.datetime.now(tz.tzlocal()).strftime(self.datetimeformat)) + " " + self.date_end
-        )
+        now = dt.datetime.now(tz.tzlocal())
+        daterange = f"{now:{self.datetimeformat}} {self.date_end}"
         output = khal_list(self.collection, daterange, self.config, self.output_format)
         output = [self._format_output(x) for x in output[1:]]
 
