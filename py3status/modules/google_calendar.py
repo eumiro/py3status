@@ -322,18 +322,6 @@ class Py3status:
             warn_message = self.py3.safe_format(self.format_notification, event_dict)
             self.py3.notify_user(warn_message, "warning", self.warn_timeout)
 
-    def _gstr_to_date(self, date_str):
-        """ Returns a dateime object from calendar date string."""
-        return parser.parse(date_str).replace(tzinfo=tzlocal())
-
-    def _gstr_to_datetime(self, date_time_str):
-        """ Returns a datetime object from calendar date/time string."""
-        return parser.parse(date_time_str)
-
-    def _datetime_to_str(self, date_time, dt_format):
-        """ Returns a strftime formatted string from a datetime object."""
-        return date_time.strftime(dt_format)
-
     def _delta_time(self, date_time):
         """
         Returns in a dict the number of days/hours/minutes and total minutes
@@ -398,20 +386,24 @@ class Py3status:
             self.event_urls.append(event["htmlLink"])
 
             if event["start"].get("date") is not None:
-                start_dt = self._gstr_to_date(event["start"].get("date"))
-                end_dt = self._gstr_to_date(event["end"].get("date"))
+                start_dt = parser.parse(event["start"].get("date")).replace(
+                    tzinfo=tz.tzlocal()
+                )
+                end_dt = parser.parse(event["end"].get("date")).replace(
+                    tzinfo=tz.tzlocal()
+                )
             else:
-                start_dt = self._gstr_to_datetime(event["start"].get("dateTime"))
-                end_dt = self._gstr_to_datetime(event["end"].get("dateTime"))
+                start_dt = parser.parse(event["start"].get("dateTime"))
+                end_dt = parser.parse(event["end"].get("dateTime"))
 
             if end_dt < dt.datetime.now(tz.tzlocal()):
                 continue
 
-            event_dict["start_time"] = self._datetime_to_str(start_dt, self.format_time)
-            event_dict["end_time"] = self._datetime_to_str(end_dt, self.format_time)
+            event_dict["start_time"] = f"{start_dt:{self.format_time}}"
+            event_dict["end_time"] = f"{end_dt:{self.format_time}}"
 
-            event_dict["start_date"] = self._datetime_to_str(start_dt, self.format_date)
-            event_dict["end_date"] = self._datetime_to_str(end_dt, self.format_date)
+            event_dict["start_date"] = f"{start_dt:{self.format_date}}"
+            event_dict["end_date"] = f"{end_dt:{self.format_date}}"
 
             time_delta = self._delta_time(start_dt)
             if time_delta["days"] < 0:
