@@ -766,8 +766,9 @@ class Py3statusWrapper:
         refreshes.
         """
         if not module_string:
-            if time.time() > (self.last_refresh_ts + 0.1):
-                self.last_refresh_ts = time.time()
+            now = time.time()
+            if self.last_refresh_ts < now - 0.1:
+                self.last_refresh_ts = now
             else:
                 # rate limiting
                 return
